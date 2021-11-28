@@ -31,7 +31,7 @@ def mine():
 
     proof = blockChain.proof_of_work(last_proof)
     transactions.create_transaction(
-        sender=Config.MINING_SENDER,
+        sender=Config.MINING_REWARD_SENDER,
         recipient=mint_address,
         amount=Config.MINING_REWARD,
         type="mint",
@@ -66,13 +66,19 @@ def view_wallet(address: str):
         "balance": wallet_balance
     }
 
-        
 @app.post('/transaction/new', name="Create transactions", tags=["transaction"], status_code=201)
 def create_transaction(sender: str, recipient: str, amount: float):
     """ insert new transaction to mempool """
-    transaction = mempool.insert_transaction(sender, recipient, amount)
-    return transaction
-
+    transaction = {
+        "sender" : sender,
+        "recipient" : recipient,
+        "amount" : amount,
+    }
+    transaction = mempool.insert_transaction(transaction)
+    if transaction:
+        return {"message" : "Transaction succesfuly submited"}
+    else:
+        return {"message" : "Infucient balance"}
         
 @app.get('/transaction', name="View mempool transactions", tags=["transaction"], status_code=200)
 def view_mempool():

@@ -5,6 +5,7 @@ from time import time
 
 from transaction.mempool import Mempool
 from config import Config
+from transaction.balance import Balance
 class BlockChain:
     """ Simple blockchain class """
     
@@ -13,9 +14,9 @@ class BlockChain:
         """ Load chains form file or create genesis block"""
         
         self.mempool = Mempool()
+        
 
         self.get_previous_blocks()
-        print("load started")
         if len(self.chain) <= 0:
             print("is less than one")
             self.create_block(previous_hash=1, proof=100)
@@ -23,6 +24,23 @@ class BlockChain:
 
     def create_block(self, proof: int, previous_hash=None):
         """ Create a new block """
+        self.mempool.load_mempool()
+        self.balances = Balance()
+        aggreed_transactions = []
+
+
+        for transaction in self.mempool.transactions:
+            if transaction["sender"] != Config().MINING_REWARD_SENDER:
+
+                if self.balances.get_balance(transaction["sender"]) >= (transaction["amount"]):
+                    aggreed_transactions.append(transaction)
+                    self.balances.update_balance(transaction["sender"], transaction["recipient"], transaction["amount"], transaction["fee"]) #TODO rewrite to better solution
+            else:
+
+                aggreed_transactions.append(transaction)
+                self.balances.update_balance(transaction["sender"], transaction["recipient"], transaction["amount"], transaction["fee"]) #TODO rewrite to better solution
+
+    
         block = {
             "index": len(self.chain) + 1,
             "timestamp": int(time()),
@@ -30,9 +48,9 @@ class BlockChain:
             "proof": proof,
             "previous_hash": previous_hash or self.hash(self.chain[-1])
         }
-        self.mempool.clear_mempool()
         self.chain.append(block)
         self.persist_chain()
+        self.mempool.clear_mempool()
         return block
 
 
@@ -78,7 +96,7 @@ class BlockChain:
         """ Validate a proof """
         guess = f'{last_proof}{proof}'.encode()
         guess_hash = hashlib.sha256(guess).hexdigest()
-        return guess_hash[:4] == "0000"
+        return guess_hash[-4:] == "0000"
 
 
     def proof_of_work(self, last_proof):

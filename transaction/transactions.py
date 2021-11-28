@@ -1,26 +1,34 @@
 import hashlib
-import json
 import random
 
 from blockchain import BlockChain
-
-
+from config import Config
+from .balance import Balance
+from .mempool import Mempool
 class Transaction:
     """ Transaction manager new - list - detail """
 
-    def __init__(self):
-        self.blockchain = BlockChain()
-    
-    mempool = []
+    balances = []
 
-    def create_transaction(self, sender: str, recipient: str, amount: float, type: str):
-        """ Create a new transaction """
+    def __init__(self):
+        self.mempool = Mempool()
+        self.blockchain = BlockChain()
+        self.balances = Balance()
+    
+
+    def create_transaction(self, sender: str, recipient: str, amount: float, type: str) -> bool:
+        """ Create a new transaction and update wallets balance """
         self.sender = sender
         self.recipient = recipient
         self.amount = amount
         self.transaction_id = self.generate_transaction_id()
         self.fee = self.amount * 0.02
         #TODO sign transaction
+
+        if sender != Config().MINING_REWARD_SENDER:
+            if self.balances.get_balance(sender) <= self.amount + self.fee:
+                return False
+        
         
         transaction = {
             "sender": self.sender,
@@ -30,7 +38,8 @@ class Transaction:
             "fee": self.fee,
             "type" : type
         }
-        self.mempool.append(transaction)
+        self.mempool.insert_transaction(transaction)
+        return True
 
     def generate_transaction_id(self):
         """ Generate a unique id for the transaction """

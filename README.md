@@ -6,9 +6,9 @@
 
 - [x] genesis block
 - [x] blocks
-- [ ] view blocks
+- [x] view blocks
 - [x] hash block
-- [ ] sign block
+- [x] sign block
 - [x] persist chain
 - [x] create block
 - [x] persistant mempool
@@ -36,7 +36,6 @@
 - [x] fee on transactions
 - [ ] dynamic gas fee based on network traffic
 
-
 ### nodes
 
 - [ ] node list
@@ -44,4 +43,4 @@
 - [ ] sync node
 - [ ] reslove conflict
 - [ ] discover node
-- [ ] disable offline nodes 
+- [ ] disable offline nodes
