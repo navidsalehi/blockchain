@@ -4,40 +4,41 @@
 
 ### blockchain
 
-- [ ] genesis block
-- [ ] blocks
-- [ ] view block
-- [ ] hash block
+- [x] genesis block
+- [x] blocks
+- [ ] view blocks
+- [x] hash block
 - [ ] sign block
-- [ ] persist chain
-- [ ] append to chain
-- [ ] persistant block
-- [ ] persistant mempool
+- [x] persist chain
+- [x] create block
+- [x] persistant mempool
 
 ### wallet
 
-- [ ] create wallet
-- [ ] private key
-- [ ] public  key
+- [x] create wallet
+- [x] private key
+- [x] public  key
 - [ ] recover wallet with seed keys
-- [ ] view wallet balance
-- [ ] view wallet transactions
+- [x] view wallet balance
+- [x] view wallet transactions
 - [ ] get income transaction notification
-- [ ] get transaction confirmation notification
+- [ ] get transaction confirmation notification in client
 
 ### transaction
-- [ ] transaction list 
+
+- [x] transaction list
 - [ ] view single transaction
-- [ ] create transaction 
+- [x] create transaction
 - [ ] sign transaction
 - [ ] verify transaction
 - [ ] send to ethereum network
-- [ ] mint coin
-- [ ] fee on transactions
+- [x] mint coin
+- [x] fee on transactions
 - [ ] dynamic gas fee based on network traffic
 
 
 ### nodes
+
 - [ ] node list
 - [ ] register node
 - [ ] sync node
