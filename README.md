@@ -18,7 +18,7 @@
 - [x] create wallet
 - [x] private key
 - [x] public  key
-- [ ] recover wallet with seed keys
+- [x] recover wallet with seed keys
 - [x] view wallet balance
 - [x] view wallet transactions
 - [ ] get income transaction notification
