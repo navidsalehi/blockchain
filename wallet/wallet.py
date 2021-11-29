@@ -6,7 +6,7 @@ import json
 import blockchain
 import transaction
 import blockchain
-
+from config import Config
 
 class Wallet:
     """
@@ -51,7 +51,7 @@ class Wallet:
         """
         seeds = []
 
-        with open("seed_word_list.txt") as file:
+        with open(Config().SEED_WORDS_FILE_NAME) as file:
             words = file.readlines()
             words = [line.rstrip() for line in words]
 
@@ -61,20 +61,25 @@ class Wallet:
 
         seeds_string = json.dumps(seeds)
 
-        private_key = self.generate_private_key(seeds_string)
-        public_key = self.generate_public_key(private_key)
+        public_key = self.generate_public_key(seeds_string)
 
         wallet = {"address": public_key, "amount": 0}
         self.wallets.append(wallet)
         return {"wallet": wallet, "seeds": seeds}
 
-    def recover_wallet(self, private_key):  # TODO - recover wallet
+    def recover_wallet(self, private_key): 
         """
         Recover a wallet from private key
         """
-        pass
+        seeds_string = json.dumps(private_key)
 
-    def view_wallet(self, public_key):  # TODO - view wallet
+        public_key = self.generate_public_key(seeds_string)
+
+        wallet = {"address": public_key}
+        return {"wallet": wallet}
+        
+
+    def view_wallet(self, public_key):
 
         """
         View a wallet from public key

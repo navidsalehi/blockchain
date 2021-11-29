@@ -59,6 +59,25 @@ def create_wallet():
     """Create new wallet with seeds"""
     return wallet.create_wallet()
 
+@app.get(
+    "/wallets/recover", name="View wallet details", tags=["Wallets"], status_code=200
+)
+def recover_wallet(
+    word1: str,  word2: str,
+    word3: str,  word4: str,
+    word5: str,  word6: str,
+    word7: str,  word8: str,
+    word9: str,  word10: str,
+    word11: str, word12: str
+):
+    """ Recover Wallet private and publick key from 12 seeds words """
+    seeds = [
+        word1, word2, word3, word4, 
+        word5, word6, word7, word8, 
+        word9, word10, word11, word12
+    ]
+    return wallet.recover_wallet(seeds)
+
 
 @app.get(
     "/wallets/{address}", name="View wallet details", tags=["Wallets"], status_code=200
@@ -73,7 +92,6 @@ def view_wallet(address: str):
         "transactions": wallet_transasctons,
         "balance": wallet_balance,
     }
-
 
 @app.post(
     "/transaction/new",
