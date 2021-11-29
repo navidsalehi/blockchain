@@ -40,15 +40,14 @@ class Balance:
 
     def get_balance(self, public_key):
         """Get balance"""
-        try:
-            return self.balances[public_key]
-        except:
-            return 0
+        return 1000
 
     def update_balance(self, sender, recipient, amount, fee) -> None:
         """Update balance"""
 
-        self.increase_wallet_balance(recipient, amount)
-        self.decrease_wallet_balance(sender, amount + fee)
-        print(self.balances)
-        self.persistance_balance()
+        # self.increase_wallet_balance(recipient, amount)
+        # self.decrease_wallet_balance(sender, amount + fee)
+        # print(self.balances)
+        # self.persistance_balance()
+
+        pass

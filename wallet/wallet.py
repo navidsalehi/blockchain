@@ -29,9 +29,7 @@ class Wallet:
         """
         Generate public key
         """
-        return hashlib.sha256(
-            self.generate_private_key(seeds=private_key).encode()
-        ).hexdigest()
+        return hashlib.sha256(private_key.encode()).hexdigest()
 
     def get_balance(self, address):
         """Get wallet balance"""
@@ -61,9 +59,10 @@ class Wallet:
 
         seeds_string = json.dumps(seeds)
 
-        public_key = self.generate_public_key(seeds_string)
+        private_key = self.generate_private_key(seeds_string)
+        public_key = self.generate_public_key(private_key)
 
-        wallet = {"address": public_key, "amount": 0}
+        wallet = {"address": public_key, "private_key": private_key,  "amount": 0}
         self.wallets.append(wallet)
         return {"wallet": wallet, "seeds": seeds}
 
@@ -73,11 +72,11 @@ class Wallet:
         """
         seeds_string = json.dumps(private_key)
 
-        public_key = self.generate_public_key(seeds_string)
+        private_key = self.generate_private_key(seeds_string)
+        public_key = self.generate_public_key(private_key)
 
-        wallet = {"address": public_key}
+        wallet = {"address": public_key, "private_key": private_key}
         return {"wallet": wallet}
-        
 
     def view_wallet(self, public_key):
 

@@ -101,17 +101,13 @@ def view_wallet(address: str):
 )
 def create_transaction(sender: str, recipient: str, amount: float):
     """insert new transaction to mempool"""
-    transaction = {
-        "sender": sender,
-        "recipient": recipient,
-        "amount": amount,
-    }
-    transaction = mempool.insert_transaction(transaction)
-    if transaction:
-        return {"message": "Transaction succesfuly submited"}
-    else:
-        return {"message": "Infucient balance"}
-
+    transaction = transactions.create_transaction(
+        sender=sender,
+        recipient=recipient,
+        amount=amount,
+        type="transfer",
+    )
+    return transaction
 
 @app.get(
     "/transaction",

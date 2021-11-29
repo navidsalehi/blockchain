@@ -1,5 +1,6 @@
 import hashlib
 import random
+import uuid
 
 from blockchain import BlockChain
 from config import Config
@@ -26,6 +27,7 @@ class Transaction:
         self.amount = amount
         self.transaction_id = self.generate_transaction_id()
         self.fee = self.amount * 0.02
+        self.nonce = uuid.uuid4().hex
         # TODO sign transaction
 
         if sender != Config().MINING_REWARD_SENDER:
@@ -39,6 +41,7 @@ class Transaction:
             "transaction_id": self.transaction_id,
             "fee": self.fee,
             "type": type,
+            "nonce" : self.nonce
         }
         self.mempool.insert_transaction(transaction)
         return True

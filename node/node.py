@@ -98,11 +98,11 @@ class Node:
             return True
         else:
             self.nodes.update(node, attempt=node['attempt']+1)
-            self.persistant_nodes()
         
         if node['attempt'] > 3:
             self.nodes.remove(node)
-            self.persistant_nodes()
+            
+        self.persistant_nodes()
 
     def brodcast_new_node(self, node):
         """Brodcast new node to all registered nodes """
