@@ -1,14 +1,16 @@
 from dataclasses import dataclass
 
+
 @dataclass
 class Config:
-    """ Blockchain configs """
+    """Blockchain configs"""
 
-    # persistence configs 
+    # persistence configs
     BLOCKS_FILE_NAME = "data/blocks.json"
     MEMPOOL_FILE_NAME = "data/mempool.json"
     WALLET_BALANCE_FILE_NAME = "data/balance.json"
     SEED_WORDS_FILE_NAME = "data/seed_word_list.txt"
+    NODE_LIST_FILE_NAME = "data/node_list.json"
 
     # transaction configs
     TRANSACTION_FEE = 0.02

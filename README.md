@@ -38,9 +38,9 @@
 
 ### nodes
 
-- [ ] node list
-- [ ] register node
+- [x] node list
+- [x] register node
 - [ ] sync node
 - [ ] reslove conflict
-- [ ] discover node
-- [ ] disable offline nodes
+- [x] brocast new node
+- [x] disable offline nodes

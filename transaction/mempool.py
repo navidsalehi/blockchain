@@ -1,12 +1,10 @@
-import json 
+import json
 
 from config import Config
 from .balance import Balance
 
 
 class Mempool:
-
-
     def __init__(self):
         self.balances = Balance()
         self.config = Config()
@@ -18,7 +16,11 @@ class Mempool:
         Add a transaction to the mempool
         """
 
-        if transaction["sender"] == None or transaction["recipient"] == None or transaction["amount"] == None:
+        if (
+            transaction["sender"] == None
+            or transaction["recipient"] == None
+            or transaction["amount"] == None
+        ):
             return False
 
         if transaction["sender"] != Config().MINING_REWARD_SENDER:
@@ -26,9 +28,9 @@ class Mempool:
                 return False
 
         self.load_mempool()
-        
+
         self.transactions.append(transaction)
-        
+
         self.persist_mempool()
 
         return True
@@ -39,7 +41,6 @@ class Mempool:
         """
         with open(Config.MEMPOOL_FILE_NAME, "w") as file:
             json.dump(self.transactions, file)
-        
 
     def load_mempool(self):
         """
@@ -52,7 +53,6 @@ class Mempool:
                 except:
                     self.transactions = []
         file.close()
-
 
     def clear_mempool(self):
         """
